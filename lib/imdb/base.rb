@@ -43,7 +43,7 @@ module Imdb
     def cast_member_ids_characters()
       memb_char = Hash.new
       cast_member_ids.each_with_index do |_m, i|
-        memb_char[cast_members[i]]= cast_characters[i]
+        memb_char[cast_member_ids[i]]= cast_characters[i]
       end
       memb_char
     end
@@ -53,12 +53,16 @@ module Imdb
       document.search("h5[text()^='Director'] ~ div a").map { |link| link.content.strip } rescue []
     end
 
+    def director_ids
+      document.search("h5[text()^='Director'] ~ div a").map { |link| link["href"].split("/")[2] } rescue []
+    end
+
     # Returns the names of Writers
     def writers
       writers_list = []
 
       fullcredits_document.search("h4[text()^='Writing Credits'] + table tbody tr td[class='name']").each_with_index do |name, i|
-        writers_list[i] = name.content.strip unless writers_list.include? name.content.strip
+        writers_list << name.content.strip unless writers_list.include? name.content.strip
       end rescue []
 
       writers_list
@@ -69,7 +73,7 @@ module Imdb
       writers_list = []
 
       fullcredits_document.search("h4[text()^='Writing Credits'] + table tbody tr td[class='name'] a").each_with_index do |name, i|
-        writers_list[i] = l['href'].sub(%r{^/name/(.*)/})
+        writers_list << name['href'].split("/")[2] unless writers_list.include? name['href'].split("/")[2]
       end rescue []
 
       writers_list.uniq
@@ -117,8 +121,11 @@ module Imdb
     end
 
     def plot_summary
-      doc = Nokogiri::HTML(Imdb::Movie.find_by_id(@id, :plotsummary))
-      doc.at('p.plotSummary').inner_html.gsub(/<i.*/im, '').strip.imdb_unescape_html rescue nil
+      document.search("h5[text()='Awards:'] ~ div").map { |link| link.content.strip } rescue []
+    end
+
+    def awards
+      document.search("h5[text()='Awards:'] ~ div").map { |link| link.content.strip }
     end
 
     # Returns a string containing the URL to the movie poster.
@@ -190,9 +197,6 @@ module Imdb
         }
       end rescue []
     end
-
-    private
-
     # Returns a new Nokogiri document for parsing.
     def document
       @document ||= Nokogiri::HTML(Imdb::Movie.find_by_id(@id))
