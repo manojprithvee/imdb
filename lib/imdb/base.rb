@@ -69,7 +69,7 @@ module Imdb
       writers_list = []
 
       fullcredits_document.search("h4[text()^='Writing Credits'] + table tbody tr td[class='name'] a").each_with_index do |name, i|
-        writers_list[i] = l['href'].sub(%r{^/name/(.*)/}
+        writers_list[i] = l['href'].sub(%r{^/name/(.*)/})
       end rescue []
 
       writers_list.uniq
