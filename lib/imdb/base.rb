@@ -13,10 +13,10 @@ module Imdb
     #
     def initialize(imdb_id, title = nil)
       @id = imdb_id
-      @url = "http://akas.imdb.com/title/tt#{imdb_id}/combined"
+      @url = "http://akas.imdb.com/title/#{imdb_id}/combined"
       @title = title.gsub(/"/, '').strip if title
     end
-
+    
     # Returns an array with cast members
     def cast_members
       document.search('table.cast td.nm a').map { |link| link.content.strip } rescue []
@@ -31,11 +31,19 @@ module Imdb
       document.search('table.cast td.char').map { |link| link.content.strip } rescue []
     end
 
-    # Returns an array with cast members and characters
-    def cast_members_characters(sep = '=>')
-      memb_char = []
+    # Returns an Hash with cast members and characters
+    def cast_members_characters()
+      memb_char = Hash.new
       cast_members.each_with_index do |_m, i|
-        memb_char[i] = "#{cast_members[i]} #{sep} #{cast_characters[i]}"
+        memb_char[cast_members[i]]= cast_characters[i]
+      end
+      memb_char
+    end
+    # Returns an Hash with cast members id and characters
+    def cast_member_ids_characters()
+      memb_char = Hash.new
+      cast_member_ids.each_with_index do |_m, i|
+        memb_char[cast_members[i]]= cast_characters[i]
       end
       memb_char
     end
@@ -54,6 +62,17 @@ module Imdb
       end rescue []
 
       writers_list
+    end
+
+    # Returns the names of Writers
+    def writers_ids
+      writers_list = []
+
+      fullcredits_document.search("h4[text()^='Writing Credits'] + table tbody tr td[class='name'] a").each_with_index do |name, i|
+        writers_list[i] = l['href'].sub(%r{^/name/(.*)/}
+      end rescue []
+
+      writers_list.uniq
     end
 
     # Returns the url to the "Watch a trailer" page
