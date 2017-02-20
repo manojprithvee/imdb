@@ -125,7 +125,7 @@ module Imdb
     end
 
     def awards
-      document.search("h5[text()='Awards:'] ~ div").map { |link| link.content.strip }
+      document.search("h5[text()='Awards:'] ~ div").map { |link| link.content.strip.gsub("\nSee more »","").gsub("\n"," ") } rescue nil
     end
 
     # Returns a string containing the URL to the movie poster.
