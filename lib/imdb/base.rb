@@ -173,6 +173,9 @@ module Imdb
       end
     end
 
+    def type
+      return document.search("span[class='title-extra']").text.include?("TV series")
+    end 
     # Returns an integer containing the year (CCYY) the movie was released in.
     def year
       document.at("a[@href^='/year/']").content.to_i rescue nil
