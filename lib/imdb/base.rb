@@ -13,7 +13,7 @@ module Imdb
     #
     def initialize(imdb_id, title = nil)
       @id = imdb_id
-      @url = "http://akas.imdb.com/title/#{imdb_id}/combined"
+      @url = "http://www.imdb.com/title/#{imdb_id}/combined"
       @title = title.gsub(/"/, '').strip if title
     end
     
