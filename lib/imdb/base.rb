@@ -106,7 +106,7 @@ module Imdb
 
     # Returns the company
     def company
-      document.search("h5[text()='Company:'] ~ div a[@href*='/company/']").map { |link| link.content.strip }.first rescue nil
+      document.search("h5[text()='Company:'] ~ div a[@href*='/company/']").map { |link| link.content.strip } rescue []
     end
 
     # Returns a string containing the plot.
