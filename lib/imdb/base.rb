@@ -230,7 +230,7 @@ module Imdb
       rescue
         if try>3
         try+=1
-        sleep(5)
+        sleep(2)
         retry
         end
       end
