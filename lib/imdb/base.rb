@@ -121,7 +121,8 @@ module Imdb
     end
 
     def plot_summary
-      document.search("h5[text()='Awards:'] ~ div").map { |link| link.content.strip } rescue []
+      doc = Nokogiri::HTML(Imdb::Movie.find_by_id(@id, :plotsummary))
+      doc.at('p.plotSummary').inner_html.gsub(/<i.*/im, '').strip.imdb_unescape_html rescue nil
     end
 
     def awards
