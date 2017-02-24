@@ -231,7 +231,7 @@ module Imdb
         if try>3
           puts "aaaaaa"
         try+=1
-        sleep(5)
+        sleep(2)
         retry
         end
       end
