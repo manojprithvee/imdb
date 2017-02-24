@@ -229,6 +229,7 @@ module Imdb
       open("http://www.imdb.com/title/#{imdb_id}/#{page}")
       rescue
         if try>3
+          puts "aaaaaa"
         try+=1
         sleep(5)
         retry
