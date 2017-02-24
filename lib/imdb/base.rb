@@ -224,11 +224,15 @@ module Imdb
     
     # Use HTTParty to fetch the raw HTML for this movie.
     def self.find_by_id(imdb_id, page = :combined)
+      try=0
       begin
       open("http://www.imdb.com/title/#{imdb_id}/#{page}")
-    rescue
-      sleep(5)
-      retry
+      rescue
+        if try>3
+        try+=1
+        sleep(5)
+        retry
+        end
       end
     end
 
