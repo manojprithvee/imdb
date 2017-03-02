@@ -13,7 +13,7 @@ module Imdb
     #
     def initialize(imdb_id, title = nil)
       @id = imdb_id
-      @url = "http://www.imdb.com/title/#{imdb_id}/combined"
+      @url = "http://www.imdb.com/title/tt#{imdb_id}/combined"
       @title = title.gsub(/"/, '').strip if title
     end
     
@@ -235,7 +235,7 @@ module Imdb
     def self.find_by_id(imdb_id, page = :combined)
       try=0
       begin
-      open("http://www.imdb.com/title/#{imdb_id}/#{page}")
+      open("http://www.imdb.com/title/tt#{imdb_id}/#{page}")
       rescue
         if try<=3
           puts "aaaaaa"
