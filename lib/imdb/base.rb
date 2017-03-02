@@ -48,6 +48,15 @@ module Imdb
       memb_char
     end
 
+    def cast_member_id_name_characters()
+      memb_char = Hash.new
+      man=cast_members_characters
+      cast_member_ids.each_with_index do |_m, i|
+        memb_char[cast_member_ids[i]]= [cast_members[i],cast_characters[i]]
+      end
+      memb_char
+    end
+
     # Returns the name of the director
     def director
       document.search("h5[text()^='Director'] ~ div a").map { |link| link.content.strip } rescue []
