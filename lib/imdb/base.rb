@@ -66,6 +66,15 @@ module Imdb
       document.search("h5[text()^='Director'] ~ div a").map { |link| link["href"].split("/")[2] } rescue []
     end
 
+    def director_ids_hash
+      memb_char = Hash.new
+      man=cast_members_characters
+      director_ids.each_with_index do |_m, i|
+        memb_char[_m]= [director[i]]
+      end
+      memb_char
+    end
+
     # Returns the names of Writers
     def writers
       writers_list = []
@@ -86,6 +95,14 @@ module Imdb
       end rescue []
 
       writers_list.uniq
+    end
+
+    def writers_ids_hash
+      memb_char = Hash.new
+      writers_ids.each_with_index do |_m, i|
+        memb_char[_m]= [director[i]]
+      end
+      memb_char
     end
 
     # Returns the url to the "Watch a trailer" page
