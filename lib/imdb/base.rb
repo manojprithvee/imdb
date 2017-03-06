@@ -100,7 +100,7 @@ module Imdb
     def writers_ids_hash
       memb_char = Hash.new
       writers_ids.each_with_index do |_m, i|
-        memb_char[_m]= [director[i]]
+        memb_char[_m]= [writers[i]]
       end
       memb_char
     end
