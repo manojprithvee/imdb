@@ -201,7 +201,7 @@ module Imdb
     end
 
     def type
-      return document.search("span[class='title-extra']").text.include?("TV series")
+      return (document.search("span[class='title-extra']").text.include?("TV series") or document.search("div[id='tn15epnav']").text.include?("Episodes"))
     end 
     # Returns an integer containing the year (CCYY) the movie was released in.
     def year
