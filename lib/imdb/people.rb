@@ -7,6 +7,7 @@ module Imdb
             @url = "http://www.imdb.com/name/#{imdb_id}/bio"
             @name = title.gsub(" - Biography - IMDb", '').strip if title
         end
+
         def dob_place
             a=document.search('td[text()="Date of Birth"] ~ td a').map{|link| link.content.strip} rescue []
         end
@@ -25,15 +26,17 @@ module Imdb
             return 1 if she<he
             return -1
         end
+
         def bio
            document.search('h4[text()*="Mini Bio"] ~ div p').map{|link| link.content.strip if !link.content.strip.include?("IMDb Mini Biography") }.compact rescue []
         end
+
         def spouce
-            document.search('table[@id="tableSpouses"] tr td').map{|link| link.content.gsub("  ","").gsub(" \n","").strip } rescue nil
+            document.search('table[@id="tableSpouses"] tr td').map{|link| link.content.gsub("  ","").gsub(" \n","").strip } rescue []
         end
 
         def death
-            a=document.search('td[text()="Date of Death"] ~ td a').map{|link| link.content.strip} rescue nil
+            a=document.search('td[text()="Date of Death"] ~ td a').map{|link| link.content.strip} rescue []
         end
 
         def self.find_by_id(imdb_id, page = :bio)
@@ -48,9 +51,11 @@ module Imdb
                 end
             end
         end
+
         def document
             @document ||= Nokogiri::HTML(Imdb::People.find_by_id(@id))
         end
+        
         def home_document
             @home_document ||= Nokogiri::HTML(Imdb::People.find_by_id(@id, ''))
         end
