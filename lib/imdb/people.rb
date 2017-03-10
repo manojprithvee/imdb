@@ -38,21 +38,21 @@ module Imdb
 
         def self.find_by_id(imdb_id, page = :bio)
             try=0
-            # begin
+            begin
             open("http://www.imdb.com/name/#{imdb_id}/#{page}")
-            # rescue
-            #     if try<=3
-            #     try+=1
-            #     sleep(2)
-            #     retry
-            #     end
-            # end
+            rescue
+                if try<=3
+                try+=1
+                sleep(2)
+                retry
+                end
+            end
         end
         def document
             @document ||= Nokogiri::HTML(Imdb::People.find_by_id(@id))
         end
         def home_document
-        @home_document ||= Nokogiri::HTML(Imdb::People.find_by_id(@id, ''))
+            @home_document ||= Nokogiri::HTML(Imdb::People.find_by_id(@id, ''))
         end
     end
 end
