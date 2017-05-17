@@ -27,6 +27,10 @@ module Imdb
             return -1
         end
 
+        def flims
+            home_document.search('div[@id="filmo-head-actor"] ~ div div @id').map{|a|  a.text.gsub("actor-","") if a.text.include?("actor")}.compact rescue []
+        end
+
         def bio
            document.search('h4[text()*="Mini Bio"] ~ div p').map{|link| link.content.strip if !link.content.strip.include?("IMDb Mini Biography") }.compact rescue []
         end
