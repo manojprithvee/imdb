@@ -27,6 +27,10 @@ module Imdb
             return -1
         end
 
+        def name
+            home_document.search('h1[@class="header"] span[@itemprop="name"]').text rescue ""
+        end
+
         def flims
             home_document.search('div[@id="filmo-head-actor"] ~ div div @id').map{|a|  a.text.gsub("actor-","") if a.text.include?("actor")}.compact rescue []
         end
