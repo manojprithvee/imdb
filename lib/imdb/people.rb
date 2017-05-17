@@ -31,8 +31,11 @@ module Imdb
             home_document.search('h1[@class="header"] span[@itemprop="name"]').text rescue ""
         end
 
-        def flims
-            home_document.search('div[@id="filmo-head-actor"] ~ div div @id').map{|a|  a.text.gsub("actor-","") if a.text.include?("actor")}.compact rescue []
+        def flims_actor
+            home_document.search('div[@id="filmo-head-actor"] ~ div div @id').map{|a|  a.text.gsub("actor-","") if a.text.include?("actor")}.compact + home_document.search('div[@id="filmo-head-actress"] ~ div div @id').map{|a|  a.text.gsub("actress-","") if a.text.include?("actress")}.compact rescue []
+        end
+        def flims_actress
+            home_document.search('div[@id="filmo-head-actress"] ~ div div @id').map{|a|  a.text.gsub("actress-","") if a.text.include?("actress")}.compact rescue []
         end
 
         def bio
