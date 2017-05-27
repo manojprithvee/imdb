@@ -27,7 +27,7 @@ module Imdb
             return -1
         end
         def poster 
-            home_document.search('img[@id="name-poster"] @src').text rescue nil
+            home_document.search('img[@id="name-poster"] @src').text rescue ""
         end
         def name
             home_document.search('h1[@class="header"] span[@itemprop="name"]').text rescue ""
