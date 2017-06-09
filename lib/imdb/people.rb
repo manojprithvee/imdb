@@ -11,6 +11,20 @@ module Imdb
         def dob_place
             a=document.search('td[text()="Date of Birth"] ~ td a').map{|link| link.content.strip} rescue []
         end
+        
+        def dob
+            home_document.search('h4[text()="Born:"] ~ time @datetime').text rescue nil
+        end
+        
+        def pob
+            home_document.search('h4[text()="Born:"] ~ a').text rescue nil
+        end
+        def dod
+            home_document.search('h4[text()="Died:"] ~ time @datetime').text rescue nil
+        end
+        def pod
+            home_document.search('h4[text()="Died:"] ~ a').text rescue nil
+        end
 
         def gender
             gender=home_document.search('div[@class="infobar"] a span').map { |link| link.content.strip }
