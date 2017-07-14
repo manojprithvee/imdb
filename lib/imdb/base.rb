@@ -196,6 +196,7 @@ module Imdb
       if @title && !force_refresh
         @title
       else
+        @title = document.xpath("//div[@id='tn15title']/h1/text()").text.strip
       end
     end
 
