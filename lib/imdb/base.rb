@@ -102,25 +102,31 @@ module Imdb
     end
 
     def awards_table
+      awards=Hash.new
       award_name.each{|movie|
+      awards[movie]=Hash.new
       abc=awards_document.search("h3:contains('#{movie}') ~ table")[0]
       list=abc.search("td @rowspan").map{|a| a.text}
       abcd=abc.search("td:last-child")
       listwon=abcd[0...list[0].to_i]
       listnom=abcd-abcd[0...list[0].to_i]
+      awards[movie]["won"]=[]
       listwon.each{|a|
-        name=a.at("text()")
-        to=a.search("a text()")
-        extra=a.search("div text()")
+        name=a.at("text()").text.strip
+        to=a.search("a text()").text.strip
+        extra=a.search("div text()").text.strip
+        awards[movie]["won"]+=[name,to,extra]
         puts "name=#{name}"
         puts "to=#{to}"
         puts "extra=#{extra}"
       }
       puts "--"*3
+      awards[movie]["won"]=[]
       puts listnom.each{|a|
-        name=a.search("text()")
-        to=a.search("a text()")
-        extra=a.search("div text()")
+        name=a.search("text()").text.strip
+        to=a.search("a text()").text.strip
+        extra=a.search("div text()").text.strip
+        awards[movie]["nom"]+=[name,to,extra]
         puts "name=#{name}"
         puts "to=#{to}"
         puts "extra=#{extra}"
@@ -128,6 +134,7 @@ module Imdb
       puts "--"*10
 
     }
+    return awards
     end
 
     def writers_ids_hash
