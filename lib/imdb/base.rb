@@ -109,7 +109,7 @@ module Imdb
       listwon=abcd[0...list[0].to_i]
       listnom=abcd-abcd[0...list[0].to_i]
       listwon.each{|a|
-        name=a.search("text()")
+        name=a.at("text()")
         to=a.search("a text()")
         extra=a.search("div text()")
         puts "name=#{name}"
