@@ -108,8 +108,8 @@ module Imdb
       abcd=abc.search("td:last-child")
       listwon=abcd[0...list[0].to_i]
       listnom=abcd-abcd[0...list[0].to_i]
-      puts listwon.inspect
-      puts listnom.inspect
+      puts listwon.text
+      puts listnom.text
     }
     end
 
