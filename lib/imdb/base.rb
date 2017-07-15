@@ -98,7 +98,7 @@ module Imdb
     end
 
     def award_name
-      awards_document.xpath("//div[@id='content-2-wide']/div[@id='main']/div/div[@class='article listo']/h3").map{|a|a.text.strip} rescue []
+      awards_document.xpath("//div[@id='content-2-wide']/div[@id='main']/div/div[@class='article listo']/h3").map{|a|a.gsub("\n","").text.strip} rescue []
     end
 
     def writers_ids_hash
