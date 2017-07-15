@@ -110,26 +110,19 @@ module Imdb
       abcd=abc.search("td:last-child")
       listwon=abcd[0...list[0].to_i]
       listnom=abcd-abcd[0...list[0].to_i]
-      awards[movie]["won"]=[]
+      awards[movie]["won"]=Array.new
       listwon.each{|a|
         name=a.at("text()").text.strip
         to=a.search("a text()").text.strip
         extra=a.search("div text()").text.strip
         awards[movie]["won"]+=[[name,to,extra]]
-        puts "name=#{name}"
-        puts "to=#{to}"
-        puts "extra=#{extra}"
       }
-      puts "--"*3
-      awards[movie]["nom"]=[]
+      awards[movie]["nom"]=Array.new
       puts listnom.each{|a|
         name=a.search("text()").text.strip
         to=a.search("a text()").text.strip
         extra=a.search("div text()").text.strip
         awards[movie]["nom"]+=[[name,to,extra]]
-        puts "name=#{name}"
-        puts "to=#{to}"
-        puts "extra=#{extra}"
       }
       puts "--"*10
 
