@@ -121,7 +121,7 @@ module Imdb
         puts "extra=#{extra}"
       }
       puts "--"*3
-      awards[movie]["won"]=[]
+      awards[movie]["nom"]=[]
       puts listnom.each{|a|
         name=a.search("text()").text.strip
         to=a.search("a text()").text.strip
