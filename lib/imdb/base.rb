@@ -108,9 +108,23 @@ module Imdb
       abcd=abc.search("td:last-child")
       listwon=abcd[0...list[0].to_i]
       listnom=abcd-abcd[0...list[0].to_i]
-      puts listwon.text
+      listwon.each{|a|
+        name=a.xpath("/text()")
+        to=a.xpath("//a/text()")
+        extra=a.xpath("//div/text()")
+        puts "name=#{name}"
+        puts "to=#{to}"
+        puts "extra=#{extra}"
+      }
       puts "--"*3
-      puts listnom.text
+      puts listnom.each{|a|
+        name=a.xpath("/text()")
+        to=a.xpath("//a/text()")
+        extra=a.xpath("//div/text()")
+        puts "name=#{name}"
+        puts "to=#{to}"
+        puts "extra=#{extra}"
+      }
       puts "--"*10
 
     }
