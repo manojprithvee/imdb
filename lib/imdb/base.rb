@@ -104,9 +104,10 @@ module Imdb
     def awards_table
       awards=Hash.new
       award_name.each{|movie|
+      movietest=movie.split(movie[/\W/])[0]
       movie1=movie.gsub("\n","")
       awards[movie1]=Hash.new
-      abc=awards_document.search("h3:contains('#{movie}') ~ table")[0]
+      abc=awards_document.search("h3:contains('#{movietest}') ~ table")[0]
       list=abc.search("td @rowspan").map{|a| a.text}
       list1=abc.search("td[@rowspan]").map{|a| a.text}
       abcd=abc.search("td:last-child")
