@@ -248,6 +248,10 @@ module Imdb
       @criticreviews_document ||= Nokogiri::HTML(Imdb::Movie.find_by_id(@id, 'criticreviews'))
     end
     
+    def awards_document
+      @awards_document ||= Nokogiri::HTML(Imdb::Movie.find_by_id(@id, 'awards'))
+    end
+    
     # Use HTTParty to fetch the raw HTML for this movie.
     def self.find_by_id(imdb_id, page = :combined)
       try=0
