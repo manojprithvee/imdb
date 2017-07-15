@@ -97,6 +97,10 @@ module Imdb
       writers_list.uniq
     end
 
+    def award_name
+      awards_document.xpath("//div[@id='content-2-wide']/div[@id='main']/div/div[@class='article listo']/h3").map{|a|a.text.strip} rescue []
+    end
+
     def writers_ids_hash
       memb_char = Hash.new
       writers_ids.each_with_index do |_m, i|
@@ -247,7 +251,7 @@ module Imdb
     def criticreviews_document
       @criticreviews_document ||= Nokogiri::HTML(Imdb::Movie.find_by_id(@id, 'criticreviews'))
     end
-    
+
     def awards_document
       @awards_document ||= Nokogiri::HTML(Imdb::Movie.find_by_id(@id, 'awards'))
     end
