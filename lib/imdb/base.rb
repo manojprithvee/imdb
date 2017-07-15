@@ -110,6 +110,7 @@ module Imdb
       listnom=abcd-abcd[0...list[0].to_i]
       puts listwon.text
       puts listnom.text
+      puts "--"*10
     }
     end
 
