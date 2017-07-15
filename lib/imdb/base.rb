@@ -104,8 +104,8 @@ module Imdb
     def awards_table
       awards=Hash.new
       award_name.each{|movie|
-      movie=movie.gsub("\n","")
-      awards[movie]=Hash.new
+      movie1=movie.gsub("\n","")
+      awards[movie1]=Hash.new
       abc=awards_document.search("h3:contains('#{movie}') ~ table")[0]
       list=abc.search("td @rowspan").map{|a| a.text}
       abcd=abc.search("td:last-child")
@@ -116,14 +116,14 @@ module Imdb
         name=a.at("text()").text.strip
         to=a.search("a text()").text.strip
         extra=a.search("div text()").text.strip
-        awards[movie]["won"]+=[[name,to,extra]]
+        awards[movie1]["won"]+=[[name,to,extra]]
       }
-      awards[movie]["nom"]=Array.new
+      awards[movie1]["nom"]=Array.new
       puts listnom.each{|a|
         name=a.search("text()").text.strip
         to=a.search("a text()").text.strip
         extra=a.search("div text()").text.strip
-        awards[movie]["nom"]+=[[name,to,extra]]
+        awards[movie1]["nom"]+=[[name,to,extra]]
       }
       puts "--"*10
 
