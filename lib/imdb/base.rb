@@ -109,8 +109,10 @@ module Imdb
       listwon=abcd[0...list[0].to_i]
       listnom=abcd-abcd[0...list[0].to_i]
       puts listwon.text
+      puts "--"*3
       puts listnom.text
       puts "--"*10
+
     }
     end
 
