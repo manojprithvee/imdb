@@ -109,10 +109,14 @@ module Imdb
       awards[movie1]=Hash.new
       abc=awards_document.search("h3:contains('#{movietest}') ~ table")[0]
       list=abc.search("td @rowspan").map{|a| a.text}
-      list1=abc.search("td[@rowspan]").map{|a| a.text}
+      list1=abc.search("td[@rowspan] b").map{|a| a.text}
       abcd=abc.search("td:last-child")
-      listwon=abcd[0...list[0].to_i]
-      listnom=abcd-abcd[0...list[0].to_i]
+      listwon=abcd[0...list[0].to_i]if abcd.size>=1
+      listnom=abcd[list[0].to_i...list[1].to_i] if if abcd.size>=2
+      list2nd=abcd[list[1].to_i...list[2].to_i] if if abcd.size>=3
+      list3rd=abcd[list[2].to_i...list[3].to_i] if if abcd.size>=4
+      list4th=abcd[list[3].to_i...list[4].to_i] if if abcd.size>=5
+
       awards[movie1][list1[0]]=Array.new
       listwon.each{|a|
         name=a.at("text()").text.strip
@@ -121,16 +125,42 @@ module Imdb
         awards[movie1][list1[0]]+=[[name,to,extra]]
       }
       if !list1[1].nil?
-      awards[movie1][list1[1]]=Array.new
-      puts listnom.each{|a|
-        name=a.search("text()").text.strip
-        to=a.search("a text()").text.strip
-        extra=a.search("div text()").text.strip
-        awards[movie1][list1[1]]+=[[name,to,extra]]
-      }
+        awards[movie1][list1[1]]=Array.new
+        puts listnom.each{|a|
+          name=a.search("text()").text.strip
+          to=a.search("a text()").text.strip
+          extra=a.search("div text()").text.strip
+          awards[movie1][list1[1]]+=[[name,to,extra]]
+        }
+      end
+      if !list1[2].nil?
+        awards[movie1][list1[2]]=Array.new
+        puts list2nd.each{|a|
+          name=a.search("text()").text.strip
+          to=a.search("a text()").text.strip
+          extra=a.search("div text()").text.strip
+          awards[movie1][list1[2]]+=[[name,to,extra]]
+        }
+      end
+      if !list1[3].nil?
+        awards[movie1][list1[3]]=Array.new
+        puts list3rd.each{|a|
+          name=a.search("text()").text.strip
+          to=a.search("a text()").text.strip
+          extra=a.search("div text()").text.strip
+          awards[movie1][list1[3]]+=[[name,to,extra]]
+        }
+      end
+      if !list1[4].nil?
+        awards[movie1][list1[4]]=Array.new
+        puts list4th.each{|a|
+          name=a.search("text()").text.strip
+          to=a.search("a text()").text.strip
+          extra=a.search("div text()").text.strip
+          awards[movie1][list1[4]]+=[[name,to,extra]]
+        }
       end
       puts "--"*10
-
     }
     return awards
     end
