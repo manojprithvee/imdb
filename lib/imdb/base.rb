@@ -162,7 +162,7 @@ module Imdb
       end
       puts "--"*10
     }
-    return awards.to_json
+    return awards
     end
 
     def writers_ids_hash
