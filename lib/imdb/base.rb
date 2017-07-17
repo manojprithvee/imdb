@@ -112,10 +112,10 @@ module Imdb
       list1=abc.search("td[@rowspan] b").map{|a| a.text}
       abcd=abc.search("td:last-child")
       listwon=abcd[0...list[0].to_i]if abcd.size>=1
-      listnom=abcd[list[0].to_i...list[1].to_i] if if abcd.size>=2
-      list2nd=abcd[list[1].to_i...list[2].to_i] if if abcd.size>=3
-      list3rd=abcd[list[2].to_i...list[3].to_i] if if abcd.size>=4
-      list4th=abcd[list[3].to_i...list[4].to_i] if if abcd.size>=5
+      listnom=abcd[list[0].to_i...list[1].to_i] if abcd.size>=2
+      list2nd=abcd[list[1].to_i...list[2].to_i] if abcd.size>=3
+      list3rd=abcd[list[2].to_i...list[3].to_i] if abcd.size>=4
+      list4th=abcd[list[3].to_i...list[4].to_i] if abcd.size>=5
 
       awards[movie1][list1[0]]=Array.new
       listwon.each{|a|
