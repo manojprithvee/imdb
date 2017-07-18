@@ -120,49 +120,72 @@ module Imdb
       awards[movie1][list1[0]]=Array.new
       listwon.each{|a|
         name=a.at("text()").text.strip
-        to=a.search("a @href").map{|a| a.text.strip}
+        to=a.search("a @href").map{|a| a.text.split("?")[0].gsub("/name/","") if !a.text.include? "title" and !a.text.include? "company" }.compact
         extra=a.search("div text()").text.strip
-        awards[movie1][list1[0]]+=[[name,to,extra]]
+          if !to.nil? and !to.empty?
+            if awards[movie1][list1[1]].nil?
+              awards[movie1][list1[1]]=Array.new
+            end
+            awards[movie1][list1[1]]+=[[name,to,extra]]
+          end
       }
       if !list1[1].nil?
-        awards[movie1][list1[1]]=Array.new
         puts listnom.each{|a|
           name=a.search("text()").text.strip
-          to=a.search("a @href").map{|a| a.text.strip}
+          to=a.search("a @href").map{|a| a.text.split("?")[0].gsub("/name/","") if !a.text.include? "title" and !a.text.include? "company" }.compact
           extra=a.search("div text()").text.strip
-          awards[movie1][list1[1]]+=[[name,to,extra]]
+          if !to.nil? and !to.empty?
+            if awards[movie1][list1[1]].nil?
+              awards[movie1][list1[1]]=Array.new
+            end
+            awards[movie1][list1[1]]+=[[name,to,extra]]
+          end
         }
       end
       if !list1[2].nil?
-        awards[movie1][list1[2]]=Array.new
         puts list2nd.each{|a|
           name=a.search("text()").text.strip
-          to=a.search("a @href").map{|a| a.text.strip}
+          to=a.search("a @href").map{|a| a.text.split("?")[0].gsub("/name/","") if !a.text.include? "title" and !a.text.include? "company" }.compact
           extra=a.search("div text()").text.strip
-          awards[movie1][list1[2]]+=[[name,to,extra]]
+          if !to.nil? and !to.empty?
+            if awards[movie1][list1[1]].nil?
+              awards[movie1][list1[1]]=Array.new
+            end
+            awards[movie1][list1[1]]+=[[name,to,extra]]
+          end
         }
       end
       if !list1[3].nil?
-        awards[movie1][list1[3]]=Array.new
         puts list3rd.each{|a|
           name=a.search("text()").text.strip
-          to=a.search("a @href").map{|a| a.text.strip}
+          to=a.search("a @href").map{|a| a.text.split("?")[0].gsub("/name/","") if !a.text.include? "title" and !a.text.include? "company" }.compact
           extra=a.search("div text()").text.strip
-          awards[movie1][list1[3]]+=[[name,to,extra]]
+          if !to.nil? and !to.empty?
+            if awards[movie1][list1[1]].nil?
+              awards[movie1][list1[1]]=Array.new
+            end
+            awards[movie1][list1[1]]+=[[name,to,extra]]
+          end
         }
       end
       if !list1[4].nil?
-        awards[movie1][list1[4]]=Array.new
         puts list4th.each{|a|
           name=a.search("text()").text.strip
-          to=a.search("a @href").map{|a| a.text.strip}
+          to=a.search("a @href").map{|a| a.text.split("?")[0].gsub("/name/","") if !a.text.include? "title" and !a.text.include? "company" }.compact
           extra=a.search("div text()").text.strip
-          awards[movie1][list1[4]]+=[[name,to,extra]]
+          if !to.nil? and !to.empty?
+            if awards[movie1][list1[1]].nil?
+              awards[movie1][list1[1]]=Array.new
+            end
+            awards[movie1][list1[1]]+=[[name,to,extra]]
+          end
         }
       end
       puts "--"*10
     }
-    return awards
+    obj = JSON.parse(awards.to_json)  
+    
+    return JSON.pretty_unparse(obj)
     end
 
     def writers_ids_hash
