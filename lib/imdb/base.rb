@@ -107,9 +107,9 @@ module Imdb
       movietest=movie[/.*[^A-Za-z ]/]
       movie1=movie.gsub("\n","")
       temp=Hash.new
-      puts movietest
+      # puts movietest
       abc=awards_document.search("h3:contains(\"#{movietest}\") ~ table")[0]
-      puts movie,abc
+      # puts movie,abc
       list=abc.search("td @rowspan").map{|a| a.text}
       list1=abc.search("td[@rowspan]").map{|a| a.text.gsub("\n","").gsub('"',"").strip.split(/\s{2,}/)}
       abcd=abc.search("td:last-child")
