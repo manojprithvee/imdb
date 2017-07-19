@@ -108,7 +108,7 @@ module Imdb
       movie1=movie.gsub("\n","")
       temp=Hash.new
       puts movietest
-      abc=awards_document.search("h3:contains('#{movietest}') ~ table")[0]
+      abc=awards_document.search("h3:contains(\"#{movietest}\") ~ table")[0]
       puts movie,abc
       list=abc.search("td @rowspan").map{|a| a.text}
       list1=abc.search("td[@rowspan]").map{|a| a.text.gsub("\n","").gsub('"',"").strip.split(/\s{2,}/)}
