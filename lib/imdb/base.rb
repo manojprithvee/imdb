@@ -105,8 +105,10 @@ module Imdb
       awards=Hash.new
       award_name.each{|movie|
       movietest=movie[/.*[^A-Za-z ]/]
+      movietest=movietest.split('"')[0]
       movie1=movie.gsub("\n","")
       temp=Hash.new
+      
       # puts movietest
       abc=awards_document.search("h3:contains(\"#{movietest}\") ~ table")[0]
       # puts movie,abc
