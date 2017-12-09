@@ -30,7 +30,7 @@ module Imdb
       end.compact.uniq.map do |values|
         # puts values.inspect
         values[1].map do |a|
-          z = [values[0], a]
+          z = [values[0], a.split("\n").reject{|a| !a.present? || (a.include? "IMDb") || (a.include? "»")}.map{|a|a.strip}[0]]
           # puts z
           result << Imdb::Movie.new(*z)
         end
