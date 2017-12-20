@@ -211,7 +211,7 @@ module Imdb
 
     # Returns an array of languages as strings.
     def languages
-      document.search("h5[text()='Language:'] ~ div a[@href*='/language/']").map { |link| link.content.strip } rescue []
+      document.search("li a[@href*='/language/']").map { |link| link.content.strip } rescue []
     end
 
     # Returns an array of countries as strings.
@@ -262,7 +262,7 @@ module Imdb
 
     # Returns a float containing the average user rating
     def rating
-      document.at('.starbar-meta b').content.split('/').first.strip.to_f rescue nil
+      document.at('.ipl-rating-star__rating').content.split('/').first.strip.to_f rescue nil
     end
     
     # Returns an int containing the Metascore
@@ -272,7 +272,7 @@ module Imdb
 
     # Returns an int containing the number of user ratings
     def votes
-      document.at('#tn15rating .tn15more').content.strip.gsub(/[^\d+]/, '').to_i rescue nil
+      Imdb::Search.new("secret superstar (2017)").movies.first.document.at('.ipl-rating-star__total-votes').content.strip.gsub(/[^\d+]/, '').to_i rescue nil
     end
 
     # Returns a string containing the tagline
@@ -299,7 +299,7 @@ module Imdb
     end 
     # Returns an integer containing the year (CCYY) the movie was released in.
     def year
-      document.at("a[@href^='/year/']").content.to_i rescue nil
+      document.at("h3[@itemprop='name'] span").content.to_i rescue nil
     end
 
     # Returns release date for the movie.
