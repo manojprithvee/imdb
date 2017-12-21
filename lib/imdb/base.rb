@@ -28,7 +28,7 @@ module Imdb
 
     # Returns an array with cast characters
     def cast_characters
-      document.search('table.cast_list td[@class="character"]').map { |link| link.content.strip } rescue []
+      document.search('table.cast_list td[@class="character"]').map { |link| link.content.strip.gsub(/\s+/, ' ') } rescue []
     end
 
     # Returns an Hash with cast members and characters
@@ -60,11 +60,11 @@ module Imdb
 
     # Returns the name of the director
     def director
-      document.search("h5[text()^='Director'] ~ div a").map { |link| link.content.strip } rescue []
+      document.search('table.subpage_data.spFirst')[0].css('tr>td>a').map { |link| link.content.strip } rescue []
     end
 
     def director_ids
-      document.search("h5[text()^='Director'] ~ div a").map { |link| link['href'].split('/')[2] } rescue []
+      document.search('table.subpage_data.spFirst')[0].css('tr>td>a').map { |link| link['href'].split('/')[2] } rescue []
     end
 
     def director_ids_hash
@@ -78,24 +78,12 @@ module Imdb
 
     # Returns the names of Writers
     def writers
-      writers_list = []
-
-      fullcredits_document.search("h4[text()^='Writing Credits'] + table tbody tr td[class='name']").each_with_index do |name, _i|
-        writers_list << name.content.strip unless writers_list.include? name.content.strip
-      end rescue []
-
-      writers_list
+      document.search('table.subpage_data.spFirst')[2].css('tr>td>a').map { |link| link.content.strip } rescue []
     end
 
     # Returns the names of Writers
     def writers_ids
-      writers_list = []
-
-      fullcredits_document.search("h4[text()^='Writing Credits'] + table tbody tr td[class='name'] a").each_with_index do |name, _i|
-        writers_list << name['href'].split('/')[2] unless writers_list.include? name['href'].split('/')[2]
-      end rescue []
-
-      writers_list.uniq
+      document.search('table.subpage_data.spFirst')[2].css('tr>td>a').map { |link| link['href'].split('/')[2] } rescue []
     end
 
     def award_name
@@ -219,7 +207,7 @@ module Imdb
 
     # Returns a string containing the plot.
     def plot
-      sanitize_plot(document.at("h5[text()='Plot:'] ~ div").content) rescue nil
+      sanitize_plot(document.search("td[text()='Plot Summary'] ~ td p").text.strip.gsub(/\s+/, ' ')) rescue nil
     end
 
     # Returns a string containing the plot summary
